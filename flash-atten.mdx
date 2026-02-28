@@ -1,0 +1,33 @@
+---
+title: "Flash-Atten"
+---
+
+# 1.Flash Atten 分块
+
+<Frame>
+  ![Image](/images/image-1.png)
+</Frame>
+
+# [2.online](http://2.online) sofxmax的原理以及公式的推导：
+
+<Frame>
+  ![Image](/images/image-2.png)
+</Frame>
+
+对比原始的softmax，safe softmax 改进的点：online softmax将safe softmax需要二次遍历寻找最大值和求和进行了优化，将其优化成使用一次遍历求和
+
+# Online softmax \* value
+
+<Frame>
+  ![Image](/images/image-3.png)
+</Frame>
+
+<Frame>
+  ![Image](/images/image-4.png)
+</Frame>
+
+# Flash Atten cuda算子
+
+<Frame>
+  ![Image](/images/image-5.png)
+</Frame>

@@ -20,7 +20,8 @@
         ]
       },
       {
-        "tab": "学习记录",
+        "tab": "记录",
+        "icon": "blog",
         "groups": [
           {
             "group": "AI infra",
@@ -28,11 +29,16 @@
             "pages": [
               {
                 "group": "CUDA算子",
-                "pages": []
+                "pages": [
+                  "reduce",
+                  "flash-atten"
+                ]
               },
               {
                 "group": "vllm",
-                "pages": []
+                "pages": [
+                  "file-1"
+                ]
               }
             ]
           }
