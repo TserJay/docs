@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "willow",
+  "theme": "mint",
   "name": "TserJay个人博客",
   "colors": {
     "primary": "#1567a3",
