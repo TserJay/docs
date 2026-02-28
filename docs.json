@@ -15,6 +15,31 @@
     "tabs": [
       {
         "tab": "首页",
+        "pages": [
+          "file"
+        ]
+      },
+      {
+        "tab": "学习记录",
+        "groups": [
+          {
+            "group": "AI infra",
+            "icon": "aperture",
+            "pages": [
+              {
+                "group": "CUDA算子",
+                "pages": []
+              },
+              {
+                "group": "vllm",
+                "pages": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "temp",
         "groups": [
           {
             "group": "Getting started",
@@ -45,27 +70,6 @@
               "ai-tools/cursor",
               "ai-tools/claude-code",
               "ai-tools/windsurf"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "学习记录",
-        "groups": [
-          {
-            "group": "AI infra",
-            "icon": "aperture",
-            "pages": [
-              {
-                "group": "CUDA算子",
-                "pages": [
-                  "untitled-page"
-                ]
-              },
-              {
-                "group": "vllm",
-                "pages": []
-              }
             ]
           }
         ]
