@@ -51,8 +51,18 @@
         "groups": [
           {
             "group": "AI infra",
+            "icon": "aperture",
             "pages": [
-              "api-reference/introduction"
+              {
+                "group": "CUDA算子",
+                "pages": [
+                  "untitled-page"
+                ]
+              },
+              {
+                "group": "vllm",
+                "pages": []
+              }
             ]
           }
         ]
