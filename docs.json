@@ -15,34 +15,38 @@
     "tabs": [
       {
         "tab": "首页",
+        "icon": "face-explode",
         "pages": [
           "file"
         ]
       },
       {
-        "tab": "记录",
-        "icon": "blog",
-        "groups": [
+        "tab": "学习记录",
+        "icon": "pen-to-square",
+        "pages": [
+          {
+            "group": "CUDA算子",
+            "pages": [
+              "reduce",
+              "flash-atten"
+            ]
+          },
+          {
+            "group": "vllm",
+            "pages": [
+              "file-1"
+            ]
+          },
           {
             "group": "AI infra",
             "icon": "aperture",
-            "pages": [
-              {
-                "group": "CUDA算子",
-                "pages": [
-                  "reduce",
-                  "flash-atten"
-                ]
-              },
-              {
-                "group": "vllm",
-                "pages": [
-                  "file-1"
-                ]
-              }
-            ]
+            "pages": []
           }
         ]
+      },
+      {
+        "tab": "学习资源",
+        "icon": "book-tanakh"
       },
       {
         "tab": "temp",
