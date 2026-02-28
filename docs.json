@@ -27,14 +27,14 @@
           {
             "group": "CUDA算子",
             "pages": [
-              "reduce",
-              "flash-atten"
+              "reduce-copied-1",
+              "flash-atten-copied-1"
             ]
           },
           {
             "group": "vllm",
             "pages": [
-              "file-1"
+              "file-1-copied-1"
             ]
           },
           {
