@@ -23,7 +23,13 @@
       {
         "tab": "学习记录",
         "icon": "pen-to-square",
-        "pages": [
+        "groups": [
+          {
+            "group": "概览",
+            "pages": [
+              "file-1"
+            ]
+          },
           {
             "group": "CUDA算子",
             "pages": [
