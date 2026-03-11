@@ -1,3 +1,73 @@
 ---
-title: "第一课"
+title: "第一节"
 ---
+
+# 一、vLLM 核心技术 PagedAtten
+
+引用文章：`https://zhuanlan.zhihu.com/p/691038809`
+
+## 1.LLM推理的两阶段：
+
+###   1.1 Prefill 预填充阶段
+
+  主要包括计算用户的prompt的隐藏状态和生成KV Cache； 一次性将输入的Token 输入到模型中，充分利用了GPU的张量并行能力，同时计算这些Token之间的关系（Attention），并生成了对应的K V，并缓存到显存中，以便在Decoder阶段中进行直接调用。
+
+####   \*\*相关发散
+
+1. **Prefill 的技术特点**
+
+  计算密集型 (Compute-bound)
+
+  由于 Prefill 是一次性处理所有输入 Token，它的矩阵乘法规模很大。此时 GPU 的算力核心（CUDA Cores/Tensor Cores）是满载的。
+
+- **瓶颈**：主要受限于 GPU 的 **TFLOPS**（每秒浮点运算次数）。
+
+  并行度极高
+
+  在 Attention 计算中，\$N\$ 个 Token 互相关联，形成一个 \$\$N \\times \$\$ 的分数矩阵。这种结构非常适合 GPU 进行大规模并行计算。
+
+  决定首字延迟 (TTFT)
+
+  用户感知的“首字延迟”（Time to First Token）几乎全部由 Prefill 阶段的耗时决定。如果你的 Prompt 特别长（比如投喂了一整篇文档），Prefill 的压力会剧增。
+
+2. **Prefill 阶段面临的挑战**
+
+  显存压力：
+
+  长文本的 Prefill 会瞬间占用大量显存来存放 KV Cache。这也是为什么你之前跑 14B 模型时，显存会被占满的原因之一。
+
+  计算突发性：
+
+  Prefill 像是一个“重锤”，突然产生巨大的计算波动。在服务器端，如果多个用户的 Prefill 同时到达，会导致正在进行 Decode 的请求出现明显的掉帧（Jitter）。
+
+3. **优化技术（vLLM 等推理框架常用）**
+
+  由于你正在使用 **vLLM** 和 **uv** 环境，了解这些优化对你配置模型很有帮助：
+
+- **Chunked Prefill（分块预填充）：**
+- 如果 Prompt 太长（例如 32k Token），一次性处理会撑爆显存。框架会将其拆成多个小块（如每块 512），分批进行 Prefill。
+- **PagedAttention**：
+- vLLM 的看家本领。它像操作系统管理虚拟内存一样管理 KV Cache，避免因为 Prefill 阶段预留过大连续显存空间而导致的浪费。
+- **FlashAttention**：
+- 通过优化 GPU 上 SRAM 和 HBM 之间的数据交换，大幅提升 Prefill 阶段处理长文本的速度。
+
+  总结
+
+- **Prefill** = 理解输入 + 并行计算 + 生成 KV Cache。
+- **Decode** = 预测输出 + 串行计算 + 读取/更新 KV Cache。
+
+###   1.2 Decode
+
+## 2、KV Cache 和 PageAttention
+
+在操作系统中：分段式内存管理，和**虚拟内存分页管理，**
+
+## 3、PageAttention 在不同的解码策略下的实现
+
+### 3.1 Parallel Sampling
+
+### 3.2 Beam Search （束搜索）
+
+### 3.3 Shared prefix
+
+**张量并行**
