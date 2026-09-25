@@ -1,59 +1,38 @@
 ---
-title: "个人Blog"
-description: "欢迎访问我的个人博客"
+title: "AI Infra 学习笔记"
+description: "记录 AI Infra 学习路上的笔记、心得与实践，欢迎交流。"
 ---
 
-## Setting up
+## 关于这里
 
-Get your documentation site up and running in minutes.
+AI Infra 方向的学习笔记，覆盖 LLM 推理、CUDA 算子与系统性能优化。
+内容持续更新，欢迎交流指正。
 
-<Card icon="rocket" horizontal href="/quickstart" title="Start here">
-  Follow our three step quickstart guide.
+<Columns cols={2}>
+  <Card title="学习记录" icon="pen-to-square" href="/notes/vllm/v1-features">
+    vLLM、CUDA 算子等技术栈的源码阅读与学习笔记。
+  </Card>
+  <Card title="学习资源" icon="book-bookmark" href="/resources">
+    精选课程、书籍、论文与博客。
+  </Card>
+</Columns>
+
+## 最新笔记
+
+<Card title="vLLM V1 新增特征" icon="sparkles" href="/notes/vllm/v1-features" horizontal>
+  调度器、前缀缓存、张量并行架构与 FlashAttention 3 的工程演进。
 </Card>
 
-## Make it yours
+<Card title="PagedAttention 与 KV Cache" icon="microchip" href="/notes/vllm/paged-attention" horizontal>
+  Prefill 与 Decode 两阶段的计算特征，以及分页式 KV Cache 管理。
+</Card>
 
-Design a docs site that looks great and empowers your users.
+<Card title="FlashAttention 分块计算" icon="bolt" href="/notes/cuda/flash-attention" horizontal>
+  从 online softmax 的公式推导到分块 Attention 算子的实现。
+</Card>
 
-<Columns cols={2}>
-  <Card icon="pen-to-square" href="/development" title="Edit locally">
-    Edit your docs locally and preview them in real time.
-  </Card>
-  <Card icon="palette" href="/essentials/settings" title="Customize your site">
-    Customize the design and colors of your site to match your brand.
-  </Card>
-  <Card icon="map" href="/essentials/navigation" title="Set up navigation">
-    Organize your docs to help users find what they need and succeed with your product.
-  </Card>
-  <Card icon="terminal" href="/api-reference/introduction" title="API documentation">
-    Auto-generate API documentation from OpenAPI specifications.
-  </Card>
-  <Card icon="sparkles">
-    
-  </Card>
-</Columns>
+## 在读
 
-## Create beautiful pages
-
-Everything you need to create world-class documentation.
-
-<Columns cols={2}>
-  <Card icon="pen-fancy" href="/essentials/markdown" title="Write with MDX">
-    Use MDX to style your docs pages.
-  </Card>
-  <Card icon="code" href="/essentials/code" title="Code samples">
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card icon="image" href="/essentials/images" title="Images">
-    Display images and other media.
-  </Card>
-  <Card icon="recycle" href="/essentials/reusable-snippets" title="Reusable snippets">
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
-
-## Need inspiration?
-
-<Card icon="stars" href="https://mintlify.com/customers" title="See complete examples">
-  Browse our showcase of exceptional documentation sites.
+<Card color="#000000" icon="book-blank" title="《AI Systems Performance Engineering》">
+  从硬件到软件的全栈性能工程实践。
 </Card>

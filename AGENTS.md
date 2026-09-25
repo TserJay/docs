@@ -1,33 +1,41 @@
-> **First-time setup**: Customize this file for your project. Prompt the user to customize this file for their project.
-> For Mintlify product knowledge (components, configuration, writing standards),
-> install the Mintlify skill: `npx skills add https://mintlify.com/docs`
-
-# Documentation project instructions
+# 个人博客项目说明
 
 ## About this project
 
-- This is a documentation site built on [Mintlify](https://mintlify.com)
-- Pages are MDX files with YAML frontmatter
-- Configuration lives in `docs.json`
-- Run `mint dev` to preview locally
-- Run `mint broken-links` to check links
+- 这是 TserJay 的个人博客，基于 [Mintlify](https://mintlify.com) 构建
+- 站点地址：[tserjay.club](https://tserjay.club)
+- 页面为 MDX 文件，带 YAML frontmatter
+- 配置文件为 `docs.json`
+- 本地预览：`mint dev`
+- 提交前检查：`mint validate` 与 `mint broken-links`
 
-## Terminology
+## Site structure
 
-<!-- Add product-specific terms and preferred usage -->
-<!-- Example: Use "workspace" not "project", "member" not "user" -->
+- `index.mdx` — 首页
+- `resources.mdx` — 学习资源
+- `notes/vllm/` — vLLM 学习笔记
+  - `v1-features.mdx` — vLLM V1 新增特征
+  - `paged-attention.mdx` — PagedAttention 与 KV Cache
+- `notes/cuda/` — CUDA 算子笔记
+  - `flash-attention.mdx` — FlashAttention 分块计算
+  - `reduce.mdx` — Reduce 算子
+- `images/` — 笔记配图
 
-## Style preferences
+## Adding a new note
 
-<!-- Add any project-specific style rules below -->
+1. 在 `notes/<分类>/` 下新建 MDX 文件，例如 `notes/cuda/softmax.mdx`
+2. 在 `docs.json` 的 `navigation.tabs` → 「学习记录」对应 group 的 `pages` 中加入路径（不带 `.mdx` 后缀）
+3. 如果更换了已有页面的路径，在 `docs.json` 的 `redirects` 中补一条重定向
 
-- Use active voice and second person ("you")
-- Keep sentences concise — one idea per sentence
-- Use sentence case for headings
-- Bold for UI elements: Click **Settings**
-- Code formatting for file names, commands, paths, and code references
+## Writing guidelines
+
+- 中文内容为主，技术术语保留英文原文
+- 标题使用名词短语或陈述句，避免「为什么」「这一章」「下面」这类引导性措辞
+- 引用外部资料时，在首次提及处直接给出链接，而不是只堆在文末
+- 代码、文件名、命令、路径使用行内代码格式
+- 段落之间留空行；Markdown 有序列表用 `1.` 加缩进，避免多条内容挤成一段
 
 ## Content boundaries
 
-<!-- Define what should and shouldn't be documented -->
-<!-- Example: Don't document internal admin features -->
+- 只记录个人学习过程中的理解与实践，不复制整篇受版权保护的书籍或论文内容
+- 引用他人文章时标注来源链接

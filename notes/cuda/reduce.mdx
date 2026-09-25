@@ -1,0 +1,26 @@
+---
+title: "Reduce 算子"
+description: "CUDA Reduce 算子的学习笔记（整理中）。"
+---
+
+## 计划整理的内容
+
+- 线程束内规约（warp shuffle）与共享内存规约的取舍
+- 不同 block size / grid size 下的访存模式与合并访问
+- 原子操作、两级规约与多级规约的实现对比
+- 使用 Nsight Compute 分析带宽利用率与 occupancy
+
+<Note>
+  这篇笔记还在整理中，内容会陆续补充。
+</Note>
+
+## 相关笔记
+
+<Columns cols={2}>
+  <Card title="FlashAttention 分块计算" icon="bolt" href="/notes/cuda/flash-attention">
+    从 online softmax 的公式推导到分块 Attention 算子的实现。
+  </Card>
+  <Card title="vLLM V1 新增特征" icon="sparkles" href="/notes/vllm/v1-features">
+    vLLM V1 在调度器、前缀缓存与张量并行上的架构演进。
+  </Card>
+</Columns>

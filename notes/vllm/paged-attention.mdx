@@ -1,0 +1,80 @@
+---
+title: "PagedAttention 与 KV Cache"
+description: "LLM 推理的 Prefill / Decode 两阶段特征，以及 vLLM 的分页式 KV Cache 管理。"
+---
+
+参考文章：[vLLM 核心技术 PagedAttention 原理](https://zhuanlan.zhihu.com/p/691038809)
+
+## LLM 推理的两个阶段
+
+### Prefill 预填充阶段
+
+主要工作是计算用户 prompt 的隐藏状态并生成 KV Cache。一次性把所有输入 token 送入模型，充分利用 GPU 的张量并行能力，同时计算这些 token 之间的 Attention 关系，生成对应的 K、V 并缓存到显存，供 Decode 阶段直接调用。
+
+#### Prefill 的技术特点
+
+**计算密集型（Compute-bound）**
+
+Prefill 一次性处理所有输入 token，矩阵乘法规模很大，此时 GPU 的算力核心（CUDA Cores / Tensor Cores）是满载的。
+
+- **瓶颈**：主要受限于 GPU 的 **TFLOPS**（每秒浮点运算次数）。
+
+**并行度极高**
+
+在 Attention 计算中，$N$ 个 token 互相关联，形成一个 $N \times N$ 的分数矩阵。这种结构非常适合 GPU 进行大规模并行计算。
+
+**决定首字延迟（TTFT）**
+
+用户感知的「首字延迟」（Time to First Token）几乎全部由 Prefill 阶段的耗时决定。如果 prompt 特别长（例如投喂了一整篇文档），Prefill 的压力会剧增。
+
+#### Prefill 阶段面临的挑战
+
+**显存压力**
+
+长文本的 Prefill 会瞬间占用大量显存来存放 KV Cache，这也是 14B 模型容易把显存占满的原因之一。
+
+**计算突发性**
+
+Prefill 像是一个「重锤」，突然产生巨大的计算波动。在服务器端，如果多个用户的 Prefill 同时到达，会导致正在进行 Decode 的请求出现明显的掉帧（Jitter）。
+
+#### 常用优化技术
+
+- **Chunked Prefill（分块预填充）**：如果 prompt 太长（例如 32k token），一次性处理会撑爆显存，框架会将其拆成多个小块（如每块 512），分批进行 Prefill。
+- **PagedAttention**：vLLM 的看家本领，像操作系统管理虚拟内存一样管理 KV Cache，避免因 Prefill 阶段预留过大连续显存空间而造成的浪费。
+- **FlashAttention**：通过优化 GPU 上 SRAM 和 HBM 之间的数据交换，大幅提升 Prefill 阶段处理长文本的速度。
+
+#### 小结
+
+- **Prefill** = 理解输入 + 并行计算 + 生成 KV Cache
+- **Decode** = 预测输出 + 串行计算 + 读取/更新 KV Cache
+
+### Decode 解码阶段
+
+## KV Cache 与 PagedAttention
+
+对应操作系统中的分段式内存管理与**虚拟内存分页管理**思想：把 KV Cache 切成固定大小的 block，用页表记录逻辑块到物理块的映射，从而消除显存碎片。
+
+## PagedAttention 在不同解码策略下的实现
+
+### Parallel Sampling
+
+多个候选序列共享同一份 prompt 的 KV Cache，只在生成分叉处分配新的物理块。
+
+### Beam Search（束搜索）
+
+### Shared Prefix
+
+多轮对话或 few-shot 场景下，多个请求共享相同前缀，PagedAttention 通过块级引用计数实现共享。
+
+## 张量并行
+
+## 相关笔记
+
+<Columns cols={2}>
+  <Card title="vLLM V1 新增特征" icon="sparkles" href="/notes/vllm/v1-features">
+    vLLM V1 在调度器、前缀缓存与张量并行上的架构演进。
+  </Card>
+  <Card title="FlashAttention 分块计算" icon="bolt" href="/notes/cuda/flash-attention">
+    从 online softmax 的公式推导到分块 Attention 算子的实现。
+  </Card>
+</Columns>

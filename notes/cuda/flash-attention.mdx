@@ -1,0 +1,50 @@
+---
+title: "FlashAttention 分块计算"
+description: "从 online softmax 的公式推导到分块 Attention CUDA 算子的实现。"
+---
+
+## FlashAttention 的分块思路
+
+标准 Attention 需要把完整的 $N \times N$ 分数矩阵写回 HBM，显存占用随序列长度平方增长。
+FlashAttention 把 Q、K、V 分块载入 SRAM，在片上完成计算，避免物化完整的注意力矩阵。
+
+<Frame>
+  ![FlashAttention 分块计算](/images/image-1.png)
+</Frame>
+
+## online softmax 的原理与公式推导
+
+<Frame>
+  ![](/images/image-2.png)
+</Frame>
+
+对比原始 softmax，safe softmax 的改进点在于：online softmax 把 safe softmax 需要两次遍历（先求最大值、再求和）的过程，优化为一次遍历即可完成累加。
+
+### online softmax 与 value 的结合
+
+分块计算时，每处理一个新的 K/V 块都要更新当前的 running max 与归一化因子，并对已累积的输出做相应缩放。
+
+<Frame>
+  ![](/images/image-3.png)
+</Frame>
+
+<Frame>
+  ![](/images/image-4.jpg)
+</Frame>
+
+## FlashAttention CUDA 算子实现
+
+<Frame>
+  ![](/images/image-5.png)
+</Frame>
+
+## 相关笔记
+
+<Columns cols={2}>
+  <Card title="PagedAttention 与 KV Cache" icon="microchip" href="/notes/vllm/paged-attention">
+    Prefill 与 Decode 两阶段的计算特征，以及分页式 KV Cache 管理。
+  </Card>
+  <Card title="vLLM V1 新增特征" icon="sparkles" href="/notes/vllm/v1-features">
+    vLLM V1 在调度器、前缀缓存与张量并行上的架构演进。
+  </Card>
+</Columns>

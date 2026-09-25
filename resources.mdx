@@ -1,0 +1,52 @@
+---
+title: "学习资源"
+description: "AI Infra 学习路上收集的课程、书籍、论文与博客。"
+---
+
+## 课程
+
+<Card title="CUDA 编程入门" icon="video" href="https://www.bilibili.com/video/BV1sM4y1x7of" horizontal>
+  CUDA 核心概念与并行编程模型，适合作为 GPU 编程的第一站。
+</Card>
+
+<Card title="CMU 15-418 / 15-618 并行计算" icon="video" href="https://www.cs.cmu.edu/~418/" horizontal>
+  并行体系结构与性能优化的经典课程，覆盖 GPU、多核与集群。
+</Card>
+
+## 书籍
+
+<Card title="《AI Systems Performance Engineering》" icon="book-open" href="https://www.aisystemperformance.com/" horizontal>
+  从硬件、内核到分布式训练与推理的全栈性能工程，当前在读。
+</Card>
+
+<Card title="《Programming Massively Parallel Processors》" icon="book-open" href="https://www.elsevier.com/books/programming-massively-parallel-processors/hwu/978-0-323-91231-0" horizontal>
+  CUDA 与大规模并行处理的标准教材，配套 CUDA 最佳实践。
+</Card>
+
+## 论文
+
+| 论文 | 主题 |
+| --- | --- |
+| [Attention Is All You Need](https://arxiv.org/abs/1706.03762) | Transformer 原始论文 |
+| [FlashAttention](https://arxiv.org/abs/2205.14135) | IO 感知的精确注意力计算 |
+| [FlashAttention-2](https://arxiv.org/abs/2307.08691) | 更好的并行度与工作划分 |
+| [FlashAttention-3](https://arxiv.org/abs/2407.08608) | 面向 Hopper 架构的异步与低精度优化 |
+| [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180) | vLLM 的 PagedAttention 与 KV Cache 分页管理 |
+| [Orca: A Distributed Serving System for Transformer-Based Generative Models](https://www.usenix.org/conference/osdi22/presentation/yu) | 连续批处理（continuous batching） |
+| [Efficiently Scaling Transformer Inference](https://arxiv.org/abs/2211.05102) | 推理阶段的并行策略与权衡 |
+| [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053) | 张量并行与流水线并行 |
+
+## 博客与文档
+
+- [vLLM 官方文档](https://docs.vllm.ai/) — 推理引擎的配置与架构说明
+- [NVIDIA CUDA C++ Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/) — CUDA 权威参考
+- [NVIDIA GPU 架构白皮书](https://www.nvidia.com/en-us/data-center/resources/) — Hopper / Blackwell 等架构细节
+- [Lilian Weng 的技术博客](https://lilianweng.github.io/) — 大模型与系统方向的综述型文章
+- [Hugging Face Blog](https://huggingface.co/blog) — 模型与推理优化实践
+
+## 开源项目
+
+- [vLLM](https://github.com/vllm-project/vllm) — 高吞吐 LLM 推理与服务引擎
+- [LeetCUDA](https://github.com/xlite-dev/LeetCUDA) — CUDA 算子练习集
+- [nano-vLLM](https://github.com/GeeeekExplorer/nano-vllm) — 精简版 vLLM 实现，适合读源码
+- [KuiperLLama](https://github.com/zjhellofss/KuiperLLama) — 从零实现 LLM 推理框架

@@ -1,0 +1,53 @@
+---
+title: "vLLM V1 新增特征"
+description: "vLLM V1 在调度器、前缀缓存、张量并行与注意力内核上的架构演进。"
+---
+
+vLLM V1 对推理引擎做了一次架构级重写，核心变化集中在执行循环、调度器、缓存管理和并行结构上。
+
+## 核心改进
+
+1. **执行循环与 API 服务** — 优化执行循环的 CPU 性能瓶颈，同时重构 API 服务层。
+
+2. **简单灵活的调度器** — 统一处理 prefill 和 decode 两类请求。
+
+3. **零开销前缀缓存** — 基于哈希的前缀缓存，配合 LRU 驱逐策略。
+
+   缓存命中率对性能的影响是非线性的：命中 0% 时几乎没有收益，但命中超过 50%、75% 时，性能分别有约 2 倍、4 倍的提升。
+
+4. **清晰的张量并行架构** — V0 为了解决进程间通信开销，把调度器和 worker 0 放在同一进程中，减少把输入数据广播到 workers 时的进程开销。这种非对称设计增加了复杂度。V1 让调度器和 worker 0 在独立进程中运行，形成对称架构；worker 端缓存请求状态，每个步骤只传输增量更新，从而把进程间通信降到最低。
+
+5. **高效的数据输入** — V1 实现了 [Persistent Batch](https://github.com/InternLM/lmdeploy) 技术，缓存输入张量并每步只应用差异，同时广泛使用 NumPy 操作替代 Python 原生操作，最大限度减少更新张量时的 CPU 开销。
+
+6. **torch.compile 与分段 CUDA 图** — 降低内核启动与图捕获开销。
+
+7. **FlashAttention 3** — V1 的最后一块拼图，见下文。
+
+8. **增强多模态 LLM 支持**。
+
+## 批处理策略的演进
+
+### 朴素批处理与静态批处理
+
+类似 CPU 单线程处理：整个批次要等每个序列都处理完毕，才一起释放资源并返回结果。这会造成大量 GPU 占用，尤其当同一批次内序列长度差异较大时，对吞吐量影响明显。
+
+### Persistent Batch（连续批处理）
+
+类似 CPU 优化中的流水线原理，目标是尽可能不让 GPU 闲置。它采用**迭代级调度**，批大小在每次迭代时确定。一旦批中某个序列完成生成，就可以在其位置插入新序列，从而实现比静态批处理更高的 GPU 利用率。
+
+现实情况比这个简化模型更复杂：预填充阶段需要计算，且与生成阶段的计算模式不同，因此很难与 token 生成一起批处理。连续批处理框架目前通过超参数来管理这个问题——例如等待已服务请求数与等待结束序列标记的请求数之比（`waiting_served_ratio`）。
+
+## FlashAttention 3 集成
+
+vLLM V1 的最后一块拼图是集成 [FlashAttention 3](https://arxiv.org/abs/2407.08608)。鉴于 V1 中高度的动态性（例如在同一批次中组合预填充和解码），一个灵活且高性能的注意力内核至关重要。FlashAttention 3 有效地满足了这一要求，为广泛的功能提供了强大支持，同时在各种用例中保持了出色的性能。
+
+## 相关笔记
+
+<Columns cols={2}>
+  <Card title="PagedAttention 与 KV Cache" icon="microchip" href="/notes/vllm/paged-attention">
+    Prefill 与 Decode 两阶段的计算特征，以及分页式 KV Cache 管理。
+  </Card>
+  <Card title="FlashAttention 分块计算" icon="bolt" href="/notes/cuda/flash-attention">
+    从 online softmax 的公式推导到分块 Attention 算子的实现。
+  </Card>
+</Columns>
