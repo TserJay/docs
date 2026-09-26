@@ -50,6 +50,13 @@
         ]
       },
       {
+        "tab": "方法论",
+        "icon": "compass",
+        "pages": [
+          "notes/method/source-code-learning"
+        ]
+      },
+      {
         "tab": "学习资源",
         "icon": "book-bookmark",
         "pages": [
