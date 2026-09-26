@@ -1,0 +1,6 @@
+# 本地临时抓取脚本
+.fetchone.js
+
+# 系统与编辑器文件
+.DS_Store
+Thumbs.db

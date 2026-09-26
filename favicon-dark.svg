@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" role="img" aria-labelledby="title">
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 36 36" role="img" aria-labelledby="title">
   <title id="title">AI Infra 学习笔记</title>
   <rect x="0.5" y="0.5" width="35" height="35" rx="10" fill="#2D3F47" stroke="#47606A"/>
   <path d="M13 10H10V26H13M23 10H26V26H23" fill="none" stroke="#B8D1D8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>

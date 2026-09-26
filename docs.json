@@ -1,15 +1,24 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "TserJay 的博客",
+  "name": "AI Infra",
   "colors": {
-    "primary": "#1567a3",
-    "light": "#1189da",
-    "dark": "#231480"
+    "primary": "#547483",
+    "light": "#AFCBD3",
+    "dark": "#425E6B"
+  },
+  "background": {
+    "color": {
+      "light": "#FBFCFC",
+      "dark": "#1F2B31"
+    }
+  },
+  "appearance": {
+    "default": "light"
   },
   "favicon": {
     "light": "/favicon.svg",
-    "dark": "/favicon.svg"
+    "dark": "/favicon-dark.svg"
   },
   "navigation": {
     "tabs": [

@@ -1,38 +1,62 @@
 ---
-title: "AI Infra 学习笔记"
-description: "记录 AI Infra 学习路上的笔记、心得与实践，欢迎交流。"
+title: "学习笔记"
+description: "记录 LLM 推理系统、CUDA 算子与系统性能工程的阅读、推导和实践。"
+mode: "custom"
 ---
 
-## 关于这里
+<div className="tj-home">
+  <section className="tj-home__hero" aria-labelledby="home-title">
+    <p className="tj-home__eyebrow">NOTES ON COMPUTING SYSTEMS</p>
+    <h1 id="home-title" className="tj-home__title">AI Infra 学习笔记</h1>
+    <p className="tj-home__lead">
+      记录 LLM 推理系统、CUDA 算子与系统性能工程中的阅读、推导和实践。
+    </p>
+    <div className="tj-home__actions">
+      <a className="tj-home__button" href="/notes/vllm/v1-features">阅读笔记 <span aria-hidden="true">→</span></a>
+      <a className="tj-home__text-link" href="/resources">学习资源 <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
 
-AI Infra 方向的学习笔记，覆盖 LLM 推理、CUDA 算子与系统性能优化。
-内容持续更新，欢迎交流指正。
+  <section className="tj-home__notes" aria-labelledby="notes-title">
+    <div className="tj-home__section-heading">
+      <div>
+        <p className="tj-home__eyebrow">RECENT WRITING</p>
+        <h2 id="notes-title">近期笔记</h2>
+      </div>
+      <p>从原理到实现，边学边记。</p>
+    </div>
 
-<Columns cols={2}>
-  <Card title="学习记录" icon="pen-to-square" href="/notes/vllm/v1-features">
-    vLLM、CUDA 算子等技术栈的源码阅读与学习笔记。
-  </Card>
-  <Card title="学习资源" icon="book-bookmark" href="/resources">
-    精选课程、书籍、论文与博客。
-  </Card>
-</Columns>
+    <div className="tj-home__note-list">
+      <a className="tj-home__note" href="/notes/vllm/v1-features">
+        <span className="tj-home__category">vLLM</span>
+        <span className="tj-home__note-content">
+          <span className="tj-home__note-title">vLLM V1 新增特征</span>
+          <span className="tj-home__note-summary">调度器、前缀缓存与执行架构的工程演进。</span>
+        </span>
+        <span className="tj-home__arrow" aria-hidden="true">↗</span>
+      </a>
+      <a className="tj-home__note" href="/notes/vllm/paged-attention">
+        <span className="tj-home__category">vLLM</span>
+        <span className="tj-home__note-content">
+          <span className="tj-home__note-title">PagedAttention 与 KV Cache</span>
+          <span className="tj-home__note-summary">Prefill、Decode 与分页式 KV Cache 管理。</span>
+        </span>
+        <span className="tj-home__arrow" aria-hidden="true">↗</span>
+      </a>
+      <a className="tj-home__note" href="/notes/cuda/flash-attention">
+        <span className="tj-home__category">CUDA</span>
+        <span className="tj-home__note-content">
+          <span className="tj-home__note-title">FlashAttention 分块计算</span>
+          <span className="tj-home__note-summary">从 online softmax 的推导到分块 Attention 算子。</span>
+        </span>
+        <span className="tj-home__arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
 
-## 最新笔记
-
-<Card title="vLLM V1 新增特征" icon="sparkles" href="/notes/vllm/v1-features" horizontal>
-  调度器、前缀缓存、张量并行架构与 FlashAttention 3 的工程演进。
-</Card>
-
-<Card title="PagedAttention 与 KV Cache" icon="microchip" href="/notes/vllm/paged-attention" horizontal>
-  Prefill 与 Decode 两阶段的计算特征，以及分页式 KV Cache 管理。
-</Card>
-
-<Card title="FlashAttention 分块计算" icon="bolt" href="/notes/cuda/flash-attention" horizontal>
-  从 online softmax 的公式推导到分块 Attention 算子的实现。
-</Card>
-
-## 在读
-
-<Card color="#000000" icon="book-blank" title="《AI Systems Performance Engineering》">
-  从硬件到软件的全栈性能工程实践。
-</Card>
+  <div className="tj-home__reading" aria-label="当前在读">
+    <span>正在读</span>
+    <p>《AI Systems Performance Engineering》</p>
+    <a href="/resources">查看学习资源 <span aria-hidden="true">→</span></a>
+  </div>
+</div>
